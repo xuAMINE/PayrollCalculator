@@ -50,6 +50,10 @@ public class Employee {
         this.payRate = payRate;
     }
 
+    public String displayInfo(){
+        return String.format("%d| %s| %.2f\n", id, name, getGrossPay());
+    }
+
     @Override
     public String toString() {
         return "com.pluralsight.Employee{" +
