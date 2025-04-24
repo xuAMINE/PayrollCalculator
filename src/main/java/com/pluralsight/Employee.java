@@ -50,8 +50,12 @@ public class Employee {
         this.payRate = payRate;
     }
 
-    public String displayInfo(){
+    public String displayInfoCSV(){
         return String.format("%d| %s| %.2f\n", id, name, getGrossPay());
+    }
+
+    public String displayInfoJSON() {
+        return String.format("\t{ \"id\": %d, \"name\" : \"%s\", \"grossPay\" : %f }", id, name, getGrossPay());
     }
 
     @Override

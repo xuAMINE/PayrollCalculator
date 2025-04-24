@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVReader {
+public class FileIO {
 
     public static List<Employee> readCSV(String fileName) {
         List<Employee> employees = new ArrayList<Employee>();
@@ -35,11 +35,13 @@ public class CSVReader {
         return employees;
     }
 
-    public static void writeCSV(Employee employee, String fileName) throws IOException {
+    public static void writeCSV(List<Employee> employees, String fileName) throws IOException {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
 
-            bw.append(employee.displayInfo());
+            for (Employee employee : employees) {
+                bw.write(employee.displayInfoCSV());
+            }
             bw.close();
 
         } catch (IOException e) {
@@ -48,6 +50,29 @@ public class CSVReader {
 
     }
 
+    public static void writeJSON(List<Employee> employees, String fileName) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+            bw.append("[\n");
+
+            for (int i = 0; i < employees.size(); i++) {
+                if (i != 0) bw.append(",\n");
+
+                Employee employee = employees.get(i);
+                bw.append(employee.displayInfoJSON());
+
+            }
+            bw.append("\n]");
+            bw.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
 
 
 }
